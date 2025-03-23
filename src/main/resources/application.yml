@@ -1,0 +1,40 @@
+spring:
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true
+    default-property-inclusion: non_null
+  application:
+    name: clean-architecture-spring-boot-gradle
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+server:
+  port: ${SERVER_PORT:8080}
+  host: ${SERVER_HOST:localhost}
+  compression:
+    enabled: true
+  http2:
+    enabled: true
+
+amazon:
+  dynamo:
+    orders:
+      table:  RJZ.Orders
+      timelogin: 900
+      consistentRead: false
+
+  aws:
+    accesskey: NONE
+    secretkey: NONE
+    region: us-east-1
+
+logging:
+  level:
+    org.apache.http: DEBUG
+    org.springframework: ERROR
+    log4j.logger.org.apache.http.wire: DEBUG
+    log4j.logger.com.amazonaws: WARN
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"
+    file: "%d %p %c{1.} [%t] %m%n"
+
