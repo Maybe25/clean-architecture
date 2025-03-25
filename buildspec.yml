@@ -1,0 +1,17 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo Iniciando sesión en Amazon ECR...
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 976138221384.dkr.ecr.us-east-1.amazonaws.com
+  build:
+    commands:
+      - echo Construyendo la imagen de Docker...
+      - docker build -t hexagonal-architecture .
+      - docker tag hexagonal-architecture:latest 976138221384.dkr.ecr.us-east-1.amazonaws.com/hexagonal-architecture:latest
+  post_build:
+    commands:
+      - echo Pushing la imagen al repositorio de ECR...
+      - docker push 976138221384.dkr.ecr.us-east-1.amazonaws.com/hexagonal-architecture:latest
+      - echo Construcción y subida completadas.
